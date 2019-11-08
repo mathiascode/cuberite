@@ -35,7 +35,7 @@ for:
       - job_name: Windows-x64-debug
 
   before_build:
-  - if not exist Debug-x64 mkdir Debug-x86
+  - if not exist Debug-x64 mkdir Debug-x64
   - cd Debug-x64
   - echo %TIME%
   - cmake -G "Visual Studio 14 2015 Win64" -DSELF_TEST=1 -DBUILD_TOOLS=1 ..
