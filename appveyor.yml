@@ -9,7 +9,7 @@ environment:
   CUBERITE_BUILD_DATETIME: "%APPVEYOR_REPO_COMMIT_TIMESTAMP%"
 
   matrix:
-  - job_name: Windows-x86-debug
+  - job_name: Windows-x64-debug
     configuration: Debug
     CUBERITE_EXECUTABLE: cuberite_debug
 
@@ -27,22 +27,22 @@ install:
 
 for:
 ##############################
-# Windows 32-bit debug build #
+# Windows 64-bit debug build #
 ##############################
 -
   matrix:
     only:
-      - job_name: Windows-x86-debug
+      - job_name: Windows-x64-debug
 
   before_build:
-  - if not exist Debug-x86 mkdir Debug-x86
-  - cd Debug-x86
+  - if not exist Debug-x64 mkdir Debug-x86
+  - cd Debug-x64
   - echo %TIME%
-  - cmake -G "Visual Studio 14 2015" -DSELF_TEST=1 -DBUILD_TOOLS=1 ..
+  - cmake -G "Visual Studio 14 2015 Win64" -DSELF_TEST=1 -DBUILD_TOOLS=1 ..
   - echo %TIME%
 
   build:
-    project: Debug-x86\Cuberite.sln
+    project: Debug-x64\Cuberite.sln
     parallel: true
     verbosity: minimal
 
@@ -87,7 +87,7 @@ for:
     verbosity: minimal
 
 cache:
-  - Debug-x86
+  - Debug-x64
   - Release-x86
   - Release-x64
 
