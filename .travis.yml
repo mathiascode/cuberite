@@ -12,6 +12,7 @@ matrix:
       compiler: clang
       env: &Release
         - TRAVIS_CUBERITE_BUILD_TYPE=RELEASE CUBERITE_PATH=./Cuberite
+      script: ./CIbuild.shs
       after_script: ./generatebuild.sh
       deploy:
         provider: pages
