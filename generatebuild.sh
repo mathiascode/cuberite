@@ -6,5 +6,5 @@ cp CONTRIBUTORS Server/
 cp LICENSE Server/
 tar -cvzf Cuberite.tar.gz Server/*
 
-mkdir MacOS
-mv Cuberite.tar.gz MacOS/
+mkdir build
+mv Cuberite.tar.gz build/
