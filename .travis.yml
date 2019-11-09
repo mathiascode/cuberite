@@ -58,6 +58,16 @@ matrix:
 
 script: ./CIbuild.sh
 
+deploy:
+  provider: pages
+  repo: mathiascode/ghpagesmacos
+  target_branch: master
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+  keep_history: true
+  on:
+    branch: master
+
 notifications:
   email:
     on_success: change
