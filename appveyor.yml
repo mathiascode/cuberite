@@ -41,7 +41,6 @@ for:
   - cmake -G "Visual Studio 14 2015 Win64" -DSELF_TEST=1 -DBUILD_TOOLS=1 ..
   - echo %TIME%
   - cd ..
-  - ctest -C Debug --output-on-failure
 
   build:
     project: Debug-x64\Cuberite.sln
