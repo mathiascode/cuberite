@@ -38,3 +38,10 @@ if [ "$TRAVIS_CUBERITE_BUILD_TYPE" != "COVERAGE" ]; then
 		exit 1
 	fi
 fi
+cd ..
+
+mkdir Server/Licenses
+cp Install/ThirdPartyLicenses/* Server/Licenses/
+cp CONTRIBUTORS Server/
+cp LICENSE Server/
+tar -cvzf Cuberite.tar.gz Server/*
