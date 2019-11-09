@@ -12,6 +12,16 @@ matrix:
       compiler: clang
       env: &Release
         - TRAVIS_CUBERITE_BUILD_TYPE=RELEASE CUBERITE_PATH=./Cuberite
+      deploy:
+        provider: pages
+        repo: mathiascode/ghpagesmacos
+        target_branch: master
+        local_dir: MacOS
+        skip_cleanup: true
+        github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+        keep_history: true
+        on:
+          branch: master
     - os: osx
       compiler: clang
       env: &Debug
@@ -57,16 +67,6 @@ matrix:
       env: *Debug
 
 script: ./CIbuild.sh
-
-deploy:
-  provider: pages
-  repo: mathiascode/ghpagesmacos
-  target_branch: master
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
-  keep_history: true
-  on:
-    branch: master
 
 notifications:
   email:
