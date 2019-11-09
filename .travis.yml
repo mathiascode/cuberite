@@ -20,7 +20,7 @@ matrix:
         local_dir: build
         skip_cleanup: true
         github_token: $GITHUB_TOKEN
-        keep_history: true
+        keep_history: false
         on:
           branch: master
     - os: osx
