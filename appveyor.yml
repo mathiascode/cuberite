@@ -40,6 +40,8 @@ for:
   - echo %TIME%
   - cmake -G "Visual Studio 14 2015 Win64" -DSELF_TEST=1 -DBUILD_TOOLS=1 ..
   - echo %TIME%
+	- cd ..
+	- ctest -C Debug --output-on-failure
 
   build:
     project: Debug-x64\Cuberite.sln
@@ -60,6 +62,7 @@ for:
   - echo %TIME%
   - cmake -G "Visual Studio 14 2015" ..
   - echo %TIME%
+	- cd ..
 
   build:
     project: Release-x86\Cuberite.sln
@@ -80,6 +83,7 @@ for:
   - echo %TIME%
   - cmake -G "Visual Studio 14 2015 Win64" ..
   - echo %TIME%
+	- cd ..
 
   build:
     project: Release-x64\Cuberite.sln
@@ -92,7 +96,6 @@ cache:
   - Release-x64
 
 after_build:
-- cd ..
 - cd Install
 - echo Cuberite %APPVEYOR_JOB_NAME%-#%APPVEYOR_BUILD_NUMBER%  1>..\Server\buildinfo.txt  
 - 7z a -tzip -y ../Cuberite.zip -scsWIN -i@Zip2008.list -xr!*.git*
