@@ -50,7 +50,7 @@ for:
     project: Debug-x64\Cuberite.sln
     parallel: true
     verbosity: minimal
-		
+
 ################################
 # Android release build #
 ################################
@@ -156,6 +156,6 @@ artifacts:
 
   - path: Server\.luacheckrc
     name: .luacheckrc
-		
-	- path: server.zip
+
+  - path: server.zip
     name: server
