@@ -10,22 +10,22 @@ environment:
   matrix:
   - job_name: Windows-x64-debug
     configuration: Debug
-		image: Visual Studio 2015
+    image: Visual Studio 2015
     CUBERITE_EXECUTABLE: cuberite_debug
 
   - job_name: Android
     configuration: Release
-		image: Ubuntu
+    image: Ubuntu
     CUBERITE_EXECUTABLE: cuberite
 
   - job_name: Windows-x86
     configuration: Release
-		image: Visual Studio 2015
+    image: Visual Studio 2015
     CUBERITE_EXECUTABLE: cuberite
 
   - job_name: Windows-x64
     configuration: Release
-		image: Visual Studio 2015
+    image: Visual Studio 2015
     CUBERITE_EXECUTABLE: cuberite
 
 install:
