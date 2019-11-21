@@ -62,8 +62,6 @@ for:
   - unzip -o android-ndk*
   - NDK="android-ndk-r20b/" CMAKE=cmake android/compile.sh all
 
-  build: off
-
 ################################
 # Windows 32-bit release build #
 ################################
