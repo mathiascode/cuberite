@@ -58,6 +58,7 @@ for:
       - job_name: Android
 
   install:
+	- git submodule update --init
   - curl -LO https://dl.google.com/android/repository/android-ndk-r20b-linux-x86_64.zip
   - unzip -o android-ndk*
   - NDK="android-ndk-r20b/" CMAKE=cmake android/compile.sh all
