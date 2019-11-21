@@ -7,7 +7,7 @@ environment:
   CUBERITE_BUILD_ID: "%APPVEYOR_BUILD_NUMBER%"
   CUBERITE_BUILD_DATETIME: "%APPVEYOR_REPO_COMMIT_TIMESTAMP%"
 
-  #matrix:
+  matrix:
   #- job_name: Windows-x64-debug
   #  configuration: Debug
   #  image: Visual Studio 2015
