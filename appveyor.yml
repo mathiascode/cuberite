@@ -10,17 +10,17 @@ environment:
   matrix:
   - job_name: Android
     configuration: Release
-    image: Ubuntu
+    APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu
     CUBERITE_EXECUTABLE: cuberite
 
   - job_name: Windows-x86
     configuration: Release
-    image: Visual Studio 2015
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
     CUBERITE_EXECUTABLE: cuberite
 
   - job_name: Windows-x64
     configuration: Release
-    image: Visual Studio 2015
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
     CUBERITE_EXECUTABLE: cuberite
 
 install:
