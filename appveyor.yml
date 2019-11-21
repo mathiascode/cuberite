@@ -12,7 +12,7 @@ environment:
   - job_name: Windows-x64-debug
     configuration: Debug
     CUBERITE_EXECUTABLE: cuberite_debug
-		
+
   - job_name: Android
     configuration: Release
     CUBERITE_EXECUTABLE: cuberite
