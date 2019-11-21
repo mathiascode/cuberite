@@ -8,11 +8,6 @@ environment:
   CUBERITE_BUILD_DATETIME: "%APPVEYOR_REPO_COMMIT_TIMESTAMP%"
 
   matrix:
-  #- job_name: Windows-x64-debug
-  #  configuration: Debug
-  #  image: Visual Studio 2015
-  #  CUBERITE_EXECUTABLE: cuberite_debug
-
   - job_name: Android
     configuration: Release
     image: Ubuntu
