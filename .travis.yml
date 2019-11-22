@@ -6,10 +6,7 @@ os: linux
 
 matrix:
   include:
-    # AppleClang
-    # OSX workers are slower to start up.  Having these first in the build matrix makes travis faster overall.
-    - os: osx
-      compiler: clang
+    - compiler: clang
       env: &Release
         - TRAVIS_CUBERITE_BUILD_TYPE=RELEASE CUBERITE_PATH=./Cuberite
       script: ./CIbuild.sh
@@ -24,6 +21,24 @@ matrix:
         keep_history: false
         on:
           branch: master
+    # AppleClang
+    # OSX workers are slower to start up.  Having these first in the build matrix makes travis faster overall.
+    - os: osx
+      compiler: clang
+      env: &Release
+        - TRAVIS_CUBERITE_BUILD_TYPE=RELEASE CUBERITE_PATH=./Cuberite
+      script: ./CIbuild.sh
+      after_success: ./generatebuild.sh
+      #deploy:
+      #  provider: pages
+       # repo: mathiascode/ghpagesmacos
+       # target_branch: master
+       # local_dir: build
+       # skip_cleanup: true
+       # github_token: $GITHUB_TOKEN
+       # keep_history: false
+       # on:
+       #   branch: master
     - os: osx
       compiler: clang
       env: &Debug
