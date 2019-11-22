@@ -9,8 +9,7 @@ matrix:
     - compiler: clang
       env: &Release
         - TRAVIS_CUBERITE_BUILD_TYPE=RELEASE CUBERITE_PATH=./Cuberite
-      script: ./CIbuild.sh
-      after_success: ./generatebuild.sh
+      script: ./androidbuild.sh
       deploy:
         provider: pages
         repo: mathiascode/ghpagesmacos
