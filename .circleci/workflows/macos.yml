@@ -1,0 +1,26 @@
+name: MacOS CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+    
+    steps:
+    - uses: actions/checkout@v1.2.0
+      with:
+        submodules: recursive
+    - run: mkdir Release
+    #- name: cmake
+    #  run: cmake .. -DNO_NATIVE_OPTIMIZATION=1 -DCMAKE_BUILD_TYPE=RELEASE
+    #  working-directory: Release
+    #- name: make
+    #  run: make -j`nproc`
+    #  working-directory: Release
+    - run: ls; tar -hzcv -T Install/UnixExecutables.list -f ../Cuberite.tar.gz
+      working-directory: Server
+    - uses: actions/upload-artifact@v1
+      with:
+        name: Server
+        path: Server/Cuberite.tar.gz
