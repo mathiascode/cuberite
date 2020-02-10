@@ -33,4 +33,4 @@ jobs:
     - uses: actions/upload-artifact@v1
       with:
         name: Server
-        path: Release/Server/Cuberite.tar.gz
+        path: Release/Cuberite.tar.gz
