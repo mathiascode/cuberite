@@ -16,7 +16,9 @@ jobs:
       id: date
       run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
 
-    - run: mkdir Release
+    - name: builddir
+      run: mkdir Release
+      
     - name: cmake
       run: cmake .. -DNO_NATIVE_OPTIMIZATION=1 -DCMAKE_BUILD_TYPE=RELEASE
       working-directory: Release
