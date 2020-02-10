@@ -12,6 +12,10 @@ jobs:
       with:
         submodules: recursive
 
+    - name: date
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
     - run: mkdir Release
     - name: cmake
       run: cmake .. -DNO_NATIVE_OPTIMIZATION=1 -DCMAKE_BUILD_TYPE=RELEASE
@@ -22,15 +26,15 @@ jobs:
     #  working-directory: Release
     #  env: 
     #    CUBERITE_BUILD_SERIES_NAME: MacOS
-    #    CUBERITE_BUILD_ID: $GITHUB_RUN_NUMBER
-    #    CUBERITE_BUILD_DATETIME: $TIME
+    #    CUBERITE_BUILD_ID: ${{ github.run_number }}
+    #    CUBERITE_BUILD_DATETIME: ${{ steps.date.outputs.date }}
 
     - run: echo Cuberite $CUBERITE_BUILD_SERIES_NAME-$CUBERITE_BUILD_ID > buildinfo.txt
       working-directory: Release/Server
       env: 
         CUBERITE_BUILD_SERIES_NAME: MacOS
-        CUBERITE_BUILD_ID: $GITHUB_RUN_NUMBER
-        CUBERITE_BUILD_DATETIME: $TIME
+        CUBERITE_BUILD_ID: ${{ github.run_number }}
+        CUBERITE_BUILD_DATETIME: ${{ steps.date.outputs.date }}
 
     #- name: cleanup
     #  run: rm !($(tr \\n \| < Install/UnixExecutables.list ))
@@ -38,5 +42,5 @@ jobs:
 
     - uses: actions/upload-artifact@v1
       with:
-        name: Server
+        name: Cuberite
         path: Release/Server/
