@@ -11,10 +11,12 @@ jobs:
     - uses: actions/checkout@v1.2.0
       with:
         submodules: recursive
+
     - run: mkdir Release
     - name: cmake
       run: cmake .. -DNO_NATIVE_OPTIMIZATION=1 -DCMAKE_BUILD_TYPE=RELEASE
       working-directory: Release
+
     - name: make
       run: make -j`nproc`
       working-directory: Release
@@ -22,14 +24,18 @@ jobs:
         CUBERITE_BUILD_SERIES_NAME: MacOS
         CUBERITE_BUILD_ID: $GITHUB_RUN_NUMBER
         CUBERITE_BUILD_DATETIME: $TIME
+
     - run: echo "Cuberite %s-%s" "$CUBERITE_BUILD_SERIES_NAME" "$CUBERITE_BUILD_ID" > buildinfo.txt
       working-directory: Release/Server
       env: 
         CUBERITE_BUILD_SERIES_NAME: MacOS
         CUBERITE_BUILD_ID: $GITHUB_RUN_NUMBER
         CUBERITE_BUILD_DATETIME: $TIME
-    - run: tar -hzcv -T Install/UnixExecutables.list -f ../Cuberite.tar.gz
+
+    - name: compress
+      run: tar -hzcv -T Install/UnixExecutables.list -f ../Cuberite.tar.gz
       working-directory: Release/Server
+
     - uses: actions/upload-artifact@v1
       with:
         name: Server
