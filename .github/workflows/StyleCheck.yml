@@ -27,3 +27,6 @@ jobs:
 
     - name: Check Bindings and Deps
       run: cd src/Bindings && lua CheckBindingsDependencies.lua
+
+    - name: Run Clang-Tidy
+      run: ./clang-tidy.sh -j 4
