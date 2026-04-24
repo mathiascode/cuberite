@@ -82,11 +82,17 @@ jobs:
 
     - if: runner.os == 'Windows'
       name: Create Zip Windows
-      run:  powershell Compress-Archive build/Server Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}.zip
+      run: |
+        cd Server\
+        7z a -tzip -y Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}.zip -scsWIN -i@Install\WindowsExecutables.list -xr!*.git*
       
     - if: runner.os != 'Windows'
       name: Create Zip Linux
-      run: zip -r Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}.zip build/Server
+      run: |
+        pushd Server
+        tar -hzcv --exclude .git -T Install/UnixExecutables.list -f ../Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}.tar.gz
+        popd
+        sha1sum Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}.tar.gz > Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}.tar.gz.sha1
       
     - name: Test
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
@@ -129,9 +135,12 @@ jobs:
       name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        if-no-files-found: 'error'
         name: Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}
-        path: Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}.zip
+        path: |
+          Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}.tar.gz
+          Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}.tar.gz.sha1
+          Server/Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}.zip
+        archive: false
   upload_release:
     # Disable the job until a proper release process is made
     if: (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/experimental') && false
