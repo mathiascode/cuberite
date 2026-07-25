@@ -112,6 +112,7 @@ jobs:
            restart
            stop
            EOF
+
            if [ -f ./NewlyUndocumented.lua ]; then
                 echo "ERROR: Newly undocumented API symbols found:"
                 cat ./NewlyUndocumented.lua
