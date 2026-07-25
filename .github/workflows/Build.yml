@@ -51,6 +51,11 @@ jobs:
             c_compiler: clang
           - os: ubuntu-latest
             c_compiler: cl
+    env:
+      CI_CUBERITE_BUILD_TYPE: ${{ matrix.build_type }}
+      CI_JOB_NUMBER: ${{ github.run_number }}
+      CC: ${{ matrix.c_compiler }}
+      CXX: ${{ matrix.cpp_compiler }}
 
     steps:
     - uses: actions/checkout@v4
@@ -65,6 +70,7 @@ jobs:
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
    
     - name: Configure CMake
+      if: runner.os == 'Windows'
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: >
@@ -77,8 +83,13 @@ jobs:
         -S ${{ github.workspace }}
         
     - name: Build
+      if: runner.os == 'Windows'
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
+
+    - if: runner.os != 'Windows'
+      name: Build
+      run: ./cibuild.sh
 
     - if: runner.os == 'Windows'
       name: Create Zip Windows
@@ -100,33 +111,6 @@ jobs:
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: ctest --build-config ${{ matrix.build_type }} --output-on-failure
 
-    - if: runner.os != 'Windows'
-      name: Docs
-      run: |
-           cd build/Server
-           touch apiCheckFailed.flag
-           ./Cuberite <<- EOF
-           load APIDump
-           api
-           apicheck
-           restart
-           stop
-           EOF
-
-           if [ -f ./NewlyUndocumented.lua ]; then
-                echo "ERROR: Newly undocumented API symbols found:"
-                cat ./NewlyUndocumented.lua
-                exit 1
-           fi
-           if [ -f ./DuplicateDocs.txt ]; then
-                echo "ERROR: API documentation has duplicate symbol warnings:"
-                cat ./DuplicateDocs.txt
-                exit 1
-           fi
-           if [ -f ./apiCheckFailed.flag ]; then
-                echo "ERROR: API check has failed with an unknown error"
-                exit 1
-           fi
     - name: Extract branch name
       shell: bash
       run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
