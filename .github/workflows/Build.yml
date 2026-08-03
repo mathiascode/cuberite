@@ -10,6 +10,33 @@ on:
       - '**'
 
 jobs:
+  source:
+    timeout-minutes: 60
+    permissions: {}
+    runs-on: ubuntu-slim
+
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        submodules: 'recursive'
+
+    - name: Build
+      run: |
+        tar -cvzf Cuberite-source.tar.gz *
+        sha1sum Cuberite-source.tar.gz > Cuberite-source.tar.gz.sha1
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v7
+      with:
+        path: Cuberite-source.tar.gz
+        archive: false
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v7
+      with:
+        path: Cuberite-source.tar.gz.sha1
+        archive: false
+
   build-posix:
     timeout-minutes: 60
     permissions: {}
