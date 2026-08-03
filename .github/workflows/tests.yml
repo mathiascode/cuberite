@@ -38,6 +38,7 @@ jobs:
         submodules: 'recursive'
 
     - name: Build and run tests
+      shell: bash
       run: ./cibuild.sh
 
     - name: Upload artifact
