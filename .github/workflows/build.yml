@@ -99,7 +99,7 @@ jobs:
 
     - name: Build
       run: |
-        cmake -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DSELF_TEST=No -DBUILD_TOOLS=No .
+        cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DSELF_TEST=No -DBUILD_TOOLS=No
         cmake --build build --config ${{ matrix.build_type }}
         cd build\Server
         Install\PackWindowsExecutables.cmd
