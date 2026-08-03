@@ -10,7 +10,7 @@ on:
       - '**'
 
 jobs:
-  build:
+  build-posix:
     timeout-minutes: 60
     permissions: {}
     runs-on: ${{ matrix.os }}
@@ -52,12 +52,59 @@ jobs:
         path: Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}.tar.gz.sha1
         archive: false
 
+  build-android:
+    timeout-minutes: 60
+    permissions: {}
+    runs-on: ubuntu-22.04
+    env:
+      CMAKE: $ANDROID_SDK_ROOT/cmake/3.18.1/bin
+      NDK: $ANDROID_NDK
+
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        submodules: 'recursive'
+
+    - name: Build
+      run: |
+        android/compile.sh all
+        mv server.zip android-server.zip
+        mv armeabi-v7a.zip android-armeabi-v7a.zip
+        mv arm64-v8a.zip android-arm64-v8a.zip
+        mv x86.zip android-x86.zip
+        mv x86_64.zip android-x86_64.zip
+
+    - uses: actions/upload-artifact@v7
+      with:
+        path: android-server.zip
+        archive: false
+
+    - uses: actions/upload-artifact@v7
+      with:
+        path: android-armeabi-v7a.zip
+        archive: false
+
+    - uses: actions/upload-artifact@v7
+      with:
+        path: android-arm64-v8a.zip
+        archive: false
+
+    - uses: actions/upload-artifact@v7
+      with:
+        path: android-x86.zip
+        archive: false
+
+    - uses: actions/upload-artifact@v7
+      with:
+        path: android-x86_64.zip
+        archive: false
+
   upload_release:
     # Disable the job until a proper release process is made
     if: (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/experimental') && false
     permissions:
       contents: write
-    needs: build
+    needs: build-posix
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
