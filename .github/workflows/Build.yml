@@ -30,16 +30,9 @@ jobs:
             cpp_compiler: clang++
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
       with:
         submodules: 'recursive'
-
-    - name: Set reusable strings
-      # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
-      id: strings
-      shell: bash
-      run: |
-        echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
     - name: Build
       run: |
@@ -48,7 +41,7 @@ jobs:
         mv Cuberite.tar.gz.sha1 Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}.tar.gz.sha1
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}
         path: |
