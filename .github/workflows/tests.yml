@@ -30,8 +30,8 @@ jobs:
       run: ./cibuild.sh
 
     - name: Upload artifact
-      if: matrix.c_compiler == 'gcc'
+      if: matrix.build_type == 'Release' && matrix.c_compiler == 'gcc'
       uses: actions/upload-artifact@v7
       with:
-        path: Server/.luacheckrc
+        path: gcc_Release/Server/.luacheckrc
         archive: false
