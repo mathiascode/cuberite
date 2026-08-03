@@ -24,11 +24,9 @@ workdir="$CC"_"$CI_CUBERITE_BUILD_TYPE"
 mkdir "$workdir"
 cd "$workdir"
 
-# Work around a Clang + ccache issue with failing builds by disabling
-# precompiled headers. Turn off LTO for faster build speeds
+# Turn off LTO for faster build speeds
 cmake .. -DCMAKE_BUILD_TYPE=${CI_CUBERITE_BUILD_TYPE} \
         -DBUILD_TOOLS=Yes \
-        -DPRECOMPILE_HEADERS=No \
         -DSELF_TEST=Yes \
         -DUNITY_BUILDS=${CI_CUBERITE_UNITY_BUILDS-Yes} \
         -DWHOLE_PROGRAM_OPTIMISATION=No \
