@@ -67,6 +67,7 @@ jobs:
 
     - name: Build
       run: |
+        sudo apt install lua5.1
         CMAKE=$ANDROID_SDK_ROOT/cmake/3.18.1/bin/cmake NDK=$ANDROID_NDK android/compile.sh all
         mv server.zip android-server.zip
         mv armeabi-v7a.zip android-armeabi-v7a.zip
