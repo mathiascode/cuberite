@@ -22,19 +22,19 @@ jobs:
 
     - name: Build
       run: |
-        tar -cvzf Cuberite-source.tar.gz *
-        sha1sum Cuberite-source.tar.gz > Cuberite-source.tar.gz.sha1
+        tar -cvzf cuberite-source.tar.gz *
+        sha1sum cuberite-source.tar.gz > cuberite-source.tar.gz.sha1
 
     - name: Upload artifact
       uses: actions/upload-artifact@v7
       with:
-        path: Cuberite-source.tar.gz
+        path: cuberite-source.tar.gz
         archive: false
 
     - name: Upload artifact
       uses: actions/upload-artifact@v7
       with:
-        path: Cuberite-source.tar.gz.sha1
+        path: cuberite-source.tar.gz.sha1
         archive: false
 
   build-posix:
@@ -47,10 +47,18 @@ jobs:
       fail-fast: false
 
       matrix:
-        os: [ubuntu-22.04, ubuntu-22.04-arm, macos-15-intel, macos-15]
-        build_type: [Release]
+        target: [linux-x86_64, linux-arm64, macos-x86_64, macos-arm64]
+        build_type: [Release, Debug]
         c_compiler: [gcc, clang]
         include:
+          - target: linux-x86_64
+            os: ubuntu-22.04
+          - target: linux-arm64
+            os: ubuntu-22.04-arm
+          - target: macos-x86_64
+            os: macos-15-intel
+          - target: macos-arm64
+            os: macos-15
           - c_compiler: gcc
             cpp_compiler: g++
           - c_compiler: clang
@@ -63,20 +71,22 @@ jobs:
 
     - name: Build
       run: |
-        ./nightlybuild.sh -s GitHub -t ${{ matrix.os }} -b ${{ github.ref_name }} -c ${{ matrix.c_compiler }} -cxx ${{ matrix.cpp_compiler }} -m ${{ matrix.build_type }} -n ${{ github.run_number }}
-        mv Cuberite.tar.gz Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}.tar.gz
-        mv Cuberite.tar.gz.sha1 Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}.tar.gz.sha1
+        ./nightlybuild.sh -s GitHub -t ${{ matrix.target }} -b ${{ github.ref_name }} -c ${{ matrix.c_compiler }} -cxx ${{ matrix.cpp_compiler }} -m ${{ matrix.build_type }} -n ${{ github.run_number }}
+        mv Cuberite.tar.gz cuberite-${{ matrix.target }}.tar.gz
+        mv Cuberite.tar.gz.sha1 cuberite-${{ matrix.target }}.tar.gz.sha1
 
     - name: Upload artifact
+      if: matrix.build_type == 'Release' && matrix.c_compiler == 'gcc'
       uses: actions/upload-artifact@v7
       with:
-        path: Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}.tar.gz
+        path: cuberite-${{ matrix.target }}.tar.gz
         archive: false
 
     - name: Upload artifact
+      if: matrix.build_type == 'Release' && matrix.c_compiler == 'gcc'
       uses: actions/upload-artifact@v7
       with:
-        path: Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}.tar.gz.sha1
+        path: cuberite-${{ matrix.target }}.tar.gz.sha1
         archive: false
 
   build-android:
