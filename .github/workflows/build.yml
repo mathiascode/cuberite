@@ -1,18 +1,10 @@
 name: Build
-on:
-  push:
-    tags-ignore:
-      - release-*
-    branches:
-      - '**'
-  pull_request:
-    branches:
-      - '**'
+on: [push, pull_request, workflow_dispatch]
+permissions: {}
 
 jobs:
   source:
     timeout-minutes: 60
-    permissions: {}
     runs-on: ubuntu-slim
 
     steps:
@@ -39,7 +31,6 @@ jobs:
 
   build-posix:
     timeout-minutes: 60
-    permissions: {}
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -91,7 +82,6 @@ jobs:
 
   build-android:
     timeout-minutes: 60
-    permissions: {}
     runs-on: ubuntu-22.04
     strategy:
       # Set fail-fast to false to ensure that feedback is delivered for all matrix combinations. Consider changing this to true when your workflow is stable.
