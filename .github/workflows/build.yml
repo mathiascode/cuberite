@@ -102,7 +102,7 @@ jobs:
         cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DSELF_TEST=Yes -DBUILD_TOOLS=Yes
         cmake --build build --config ${{ matrix.build_type }}
         cd build\Server
-        Install\PackWindowsExecutables.cmd | true
+        Install\PackWindowsExecutables.cmd
         mv Cuberite.zip cuberite-${{ matrix.target }}.zip
 
     - name: Upload artifact
