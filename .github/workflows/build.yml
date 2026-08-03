@@ -160,7 +160,7 @@ jobs:
     if: (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/experimental') && false
     permissions:
       contents: write
-    needs: build-posix
+    needs: build
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
