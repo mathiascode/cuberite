@@ -65,11 +65,14 @@ jobs:
       with:
         submodules: 'recursive'
 
+    - name: Install dependencies
+      run: sudo apt install lua5.1
+
     - name: Build
       run: |
-        sudo apt install lua5.1
-        CMAKE=$ANDROID_SDK_ROOT/cmake/3.18.1/bin/cmake NDK=$ANDROID_NDK android/compile.sh all
-        mv server.zip android-server.zip
+        cd android/
+        CMAKE=$ANDROID_SDK_ROOT/cmake/3.18.1/bin/cmake NDK=$ANDROID_NDK ./compile.sh all
+        mv Server/server.zip Server/android-server.zip
         mv armeabi-v7a.zip android-armeabi-v7a.zip
         mv arm64-v8a.zip android-arm64-v8a.zip
         mv x86.zip android-x86.zip
@@ -77,7 +80,7 @@ jobs:
 
     - uses: actions/upload-artifact@v7
       with:
-        path: android-server.zip
+        path: Server/android-server.zip
         archive: false
 
     - uses: actions/upload-artifact@v7
