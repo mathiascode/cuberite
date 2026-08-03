@@ -94,65 +94,65 @@ jobs:
       run: |
         CMAKE=$ANDROID_SDK_ROOT/cmake/3.18.1/bin/cmake NDK=$ANDROID_NDK android/compile.sh all
 
-        mv android-build/Server/server.zip android-build/Server/cuberite-android-server.zip
-        mv android-build/Server/server.zip.sha1 android-build/Server/cuberite-android-server.zip.sha1
-        mv android-build/Server/armeabi-v7a.zip android-build/Server/cuberite-android-armeabi-v7a.zip
-        mv android-build/Server/armeabi-v7a.zip.sha1 android-build/Server/cuberite-android-armeabi-v7a.zip.sha1
-        mv android-build/Server/arm64-v8a.zip android-build/Server/cuberite-android-arm64-v8a.zip
-        mv android-build/Server/arm64-v8a.zip.sha1 android-build/Server/cuberite-android-arm64-v8a.zip.sha1
-        mv android-build/Server/x86.zip android-build/Server/cuberite-android-x86.zip
-        mv android-build/Server/x86.zip.sha1 android-build/Server/cuberite-android-x86.zip.sha1
-        mv android-build/Server/x86_64.zip android-build/Server/cuberite-android-x86_64.zip
-        mv android-build/Server/x86_64.zip.sha1 android-build/Server/cuberite-android-x86_64.zip.sha1
+        mv android/Server/server.zip android/Server/cuberite-android-server.zip
+        mv android/Server/server.zip.sha1 android/Server/cuberite-android-server.zip.sha1
+        mv android/Server/armeabi-v7a.zip android/Server/cuberite-android-armeabi-v7a.zip
+        mv android/Server/armeabi-v7a.zip.sha1 android/Server/cuberite-android-armeabi-v7a.zip.sha1
+        mv android/Server/arm64-v8a.zip android/Server/cuberite-android-arm64-v8a.zip
+        mv android/Server/arm64-v8a.zip.sha1 android/Server/cuberite-android-arm64-v8a.zip.sha1
+        mv android/Server/x86.zip android/Server/cuberite-android-x86.zip
+        mv android/Server/x86.zip.sha1 android/Server/cuberite-android-x86.zip.sha1
+        mv android/Server/x86_64.zip android/Server/cuberite-android-x86_64.zip
+        mv android/Server/x86_64.zip.sha1 android/Server/cuberite-android-x86_64.zip.sha1
 
     - uses: actions/upload-artifact@v7
       with:
-        path: android-build/Server/cuberite-android-server.zip
+        path: android/Server/cuberite-android-server.zip
         archive: false
 
     - uses: actions/upload-artifact@v7
       with:
-        path: android-build/Server/cuberite-android-server.zip.sha1
+        path: android/Server/cuberite-android-server.zip.sha1
         archive: false
 
     - uses: actions/upload-artifact@v7
       with:
-        path: android-build/Server/cuberite-android-armeabi-v7a.zip
+        path: android/Server/cuberite-android-armeabi-v7a.zip
         archive: false
 
     - uses: actions/upload-artifact@v7
       with:
-        path: android-build/Server/cuberite-android-armeabi-v7a.zip.sha1
+        path: android/Server/cuberite-android-armeabi-v7a.zip.sha1
         archive: false
 
     - uses: actions/upload-artifact@v7
       with:
-        path: android-build/Server/cuberite-android-arm64-v8a.zip
+        path: android/Server/cuberite-android-arm64-v8a.zip
         archive: false
 
     - uses: actions/upload-artifact@v7
       with:
-        path: android-build/Server/cuberite-android-arm64-v8a.zip.sha1
+        path: android/Server/cuberite-android-arm64-v8a.zip.sha1
         archive: false
 
     - uses: actions/upload-artifact@v7
       with:
-        path: android-build/Server/cuberite-android-x86.zip
+        path: android/Server/cuberite-android-x86.zip
         archive: false
 
     - uses: actions/upload-artifact@v7
       with:
-        path: android-build/Server/cuberite-android-x86.zip.sha1
+        path: android/Server/cuberite-android-x86.zip.sha1
         archive: false
 
     - uses: actions/upload-artifact@v7
       with:
-        path: android-build/Server/cuberite-android-x86_64.zip
+        path: android/Server/cuberite-android-x86_64.zip
         archive: false
 
     - uses: actions/upload-artifact@v7
       with:
-        path: android-build/Server/cuberite-android-x86_64.zip.sha1
+        path: android/Server/cuberite-android-x86_64.zip.sha1
         archive: false
 
   upload_release:
