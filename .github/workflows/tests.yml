@@ -3,9 +3,9 @@ on: [push, pull_request, workflow_dispatch]
 permissions: {}
 
 jobs:
-  source:
+  tests:
     timeout-minutes: 60
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         build_type: [Release, Debug]
@@ -28,3 +28,10 @@ jobs:
 
     - name: Build and run tests
       run: ./cibuild.sh
+
+    - name: Upload artifact
+      if: matrix.c_compiler == 'gcc'
+      uses: actions/upload-artifact@v7
+      with:
+        path: Server/.luacheckrc
+        archive: false
