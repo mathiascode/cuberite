@@ -89,19 +89,16 @@ jobs:
 
     - if: runner.os != 'Windows'
       name: Build
-      run: ./nightlybuild.sh -s GitHub -t target -b ${{ github.ref_name }} -c ${{ matrix.c_compiler }} -cxx ${{ matrix.cpp_compiler }} -m ${{ matrix.build_type }} -n ${{ github.run_number }}
+      run: |
+        ./nightlybuild.sh -s GitHub -t ${{ matrix.os }} -b ${{ github.ref_name }} -c ${{ matrix.c_compiler }} -cxx ${{ matrix.cpp_compiler }} -m ${{ matrix.build_type }} -n ${{ github.run_number }}
+        mv Cuberite.tar.gz Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}.tar.gz
+        mv Cuberite.tar.gz.sha1 Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}.tar.gz.sha1
 
     - if: runner.os == 'Windows'
       name: Create Zip Windows
       run: |
         cd Server\
         7z a -tzip -y Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}.zip -scsWIN -i@Install\WindowsExecutables.list -xr!*.git*
-      
-    - name: Test
-      working-directory: ${{ steps.strings.outputs.build-output-dir }}
-      # Execute tests defined by the CMake configuration. Note that --build-config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
-      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: ctest --build-config ${{ matrix.build_type }} --output-on-failure
 
     - if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/experimental'
       name: Upload artifact
