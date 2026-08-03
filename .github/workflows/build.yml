@@ -34,9 +34,6 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     strategy:
-      # Set fail-fast to false to ensure that feedback is delivered for all matrix combinations. Consider changing this to true when your workflow is stable.
-      fail-fast: false
-
       matrix:
         target: [linux-x86_64, linux-arm64, macos-x86_64, macos-arm64]
         build_type: [Release, Debug]
@@ -83,12 +80,6 @@ jobs:
   build-android:
     timeout-minutes: 60
     runs-on: ubuntu-22.04
-    strategy:
-      # Set fail-fast to false to ensure that feedback is delivered for all matrix combinations. Consider changing this to true when your workflow is stable.
-      fail-fast: false
-
-      matrix:
-        target: [armeabi-v7a, arm64-v8a, x86, x86_64]
 
     steps:
     - uses: actions/checkout@v7
@@ -102,22 +93,60 @@ jobs:
       run: |
         cd android/
         CMAKE=$ANDROID_SDK_ROOT/cmake/3.18.1/bin/cmake NDK=$ANDROID_NDK ./compile.sh ${{ matrix.target }}
-        mv Server/server.zip Server/android-server.zip
-        mv ${{ matrix.target }}.zip android-${{ matrix.target }}.zip
+        mv Server/server.zip Server/cuberite-android-server.zip
+        mv Server/armeabi-v7a.zip Server/cuberite-android-armeabi-v7a.zip
+        mv Server/arm64-v8a.zip Server/cuberite-android-arm64-v8a.zip
+        mv Server/x86.zip Server/cuberite-android-x86.zip
+        mv Server/x86_64.zip Server/cuberite-android-x86_64.zip
 
     - uses: actions/upload-artifact@v7
       with:
-        path: Server/android-server.zip
+        path: Server/cuberite-android-server.zip
         archive: false
 
     - uses: actions/upload-artifact@v7
       with:
-        path: android-${{ matrix.target }}.zip
+        path: Server/cuberite-android-server.zip.sha1
         archive: false
 
     - uses: actions/upload-artifact@v7
       with:
-        path: android-${{ matrix.target }}.zip.sha1
+        path: Server/cuberite-android-armeabi-v7a.zip
+        archive: false
+
+    - uses: actions/upload-artifact@v7
+      with:
+        path: Server/cuberite-android-armeabi-v7a.zip.sha1
+        archive: false
+
+    - uses: actions/upload-artifact@v7
+      with:
+        path: Server/cuberite-android-arm64-v8a.zip
+        archive: false
+
+    - uses: actions/upload-artifact@v7
+      with:
+        path: Server/cuberite-android-arm64-v8a.zip.sha1
+        archive: false
+
+    - uses: actions/upload-artifact@v7
+      with:
+        path: Server/cuberite-android-x86.zip
+        archive: false
+
+    - uses: actions/upload-artifact@v7
+      with:
+        path: Server/cuberite-android-x86.zip.sha1
+        archive: false
+
+    - uses: actions/upload-artifact@v7
+      with:
+        path: Server/cuberite-android-x86_64.zip
+        archive: false
+
+    - uses: actions/upload-artifact@v7
+      with:
+        path: Server/cuberite-android-x86_64.zip.sha1
         archive: false
 
   upload_release:
