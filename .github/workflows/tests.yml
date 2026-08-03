@@ -35,3 +35,4 @@ jobs:
       with:
         path: gcc_Release/Server/.luacheckrc
         archive: false
+        include-hidden-files: true
