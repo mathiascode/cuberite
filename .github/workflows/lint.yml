@@ -1,14 +1,6 @@
-name: Style Check
+name: Lint
+on: [push, pull_request, workflow_dispatch]
 permissions: {}
-on:
-  push:
-    tags-ignore:
-      - release-*
-    branches:
-      - '**'
-  pull_request:
-    branches:
-      - '**'
 
 jobs:
   build:
@@ -20,15 +12,16 @@ jobs:
       with:
         submodules: 'recursive'
 
-    - uses: leafo/gh-actions-lua@v11
+    - name: Install dependencies
+      run: sudo apt install lua5.1
 
-    - name: Find Files
+    - name: Find files
       run: cd src && find . -name "*.cpp" -or -name "*.h" > AllFiles.lst
 
-    - name: Check Basic Style
+    - name: Check basic style
       run: cd src && lua CheckBasicStyle.lua
 
-    - name: Check Bindings and Deps
+    - name: Check bindings and deps
       run: cd src/Bindings && lua CheckBindingsDependencies.lua
 
     - name: Run Clang-Tidy
