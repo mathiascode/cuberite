@@ -89,7 +89,7 @@ jobs:
 
     - if: runner.os != 'Windows'
       name: Build
-      run: ./cibuild.sh
+      run: ./nightlybuild.sh -s GitHub -t target -b ${{ github.ref_name }} -c ${{ matrix.c_compiler }} -cxx ${{ matrix.cpp_compiler }} -m ${{ matrix.build_type }} -n ${{ github.run_number }}
 
     - if: runner.os == 'Windows'
       name: Create Zip Windows
@@ -97,24 +97,11 @@ jobs:
         cd Server\
         7z a -tzip -y Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}.zip -scsWIN -i@Install\WindowsExecutables.list -xr!*.git*
       
-    - if: runner.os != 'Windows'
-      name: Create Zip Linux
-      run: |
-        pushd Server
-        tar -hzcv --exclude .git -T Install/UnixExecutables.list -f ../Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}.tar.gz
-        popd
-        sha1sum Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}.tar.gz > Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}.tar.gz.sha1
-      
     - name: Test
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
       # Execute tests defined by the CMake configuration. Note that --build-config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: ctest --build-config ${{ matrix.build_type }} --output-on-failure
-
-    - name: Extract branch name
-      shell: bash
-      run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
-      id: extract_branch
 
     - if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/experimental'
       name: Upload artifact
@@ -135,10 +122,6 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-      - name: Extract branch name
-        shell: bash
-        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
-        id: extract_branch
       - name: Download Artifacts
         uses: actions/download-artifact@v4
         with:
@@ -146,8 +129,8 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: release-${{ steps.extract_branch.outputs.branch }}
-          name: Release ${{ steps.extract_branch.outputs.branch }}
+          tag_name: release-${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
           body: Automatically uploaded release by GitHub actions
           fail_on_unmatched_files: true
           files: |
@@ -164,14 +147,14 @@ jobs:
             github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: 'refs/tags/release-${{ steps.extract_branch.outputs.branch }}',
+              ref: 'refs/tags/release-${{ github.ref_name }}',
               sha: context.sha
             }).catch(err => {
               if (err.status !== 422) throw err;
               github.rest.git.updateRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                ref: 'tags/release-${{ steps.extract_branch.outputs.branch }}',
+                ref: 'tags/release-${{ github.ref_name }}',
                 sha: context.sha
               });
             })
