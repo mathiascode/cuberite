@@ -44,10 +44,16 @@ jobs:
       uses: actions/upload-artifact@v7
       with:
         name: Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}
-        path: |
-          Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}.tar.gz
-          Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}.tar.gz.sha1
+        path: Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}.tar.gz
         archive: false
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v7
+      with:
+        name: Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}
+        path: Cuberite-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}.tar.gz.sha1
+        archive: false
+
   upload_release:
     # Disable the job until a proper release process is made
     if: (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/experimental') && false
