@@ -60,6 +60,7 @@ jobs:
     - name: Build
       run: |
         ./nightlybuild.sh -s GitHub -t ${{ matrix.target }} -b ${{ github.ref_name }} -c ${{ matrix.c_compiler }} -cxx ${{ matrix.cpp_compiler }} -m ${{ matrix.build_type }} -n ${{ github.run_number }}
+
         mv Cuberite.tar.gz cuberite-${{ matrix.target }}.tar.gz
         mv Cuberite.tar.gz.sha1 cuberite-${{ matrix.target }}.tar.gz.sha1
 
@@ -92,7 +93,8 @@ jobs:
     - name: Build
       run: |
         cd android/
-        CMAKE=$ANDROID_SDK_ROOT/cmake/3.18.1/bin/cmake NDK=$ANDROID_NDK ./compile.sh ${{ matrix.target }}
+        CMAKE=$ANDROID_SDK_ROOT/cmake/3.18.1/bin/cmake NDK=$ANDROID_NDK ./compile.sh all
+
         mv Server/server.zip Server/cuberite-android-server.zip
         mv Server/armeabi-v7a.zip Server/cuberite-android-armeabi-v7a.zip
         mv Server/arm64-v8a.zip Server/cuberite-android-arm64-v8a.zip
