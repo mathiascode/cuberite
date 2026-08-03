@@ -100,6 +100,7 @@ jobs:
     - name: Build
       run: |
         cmake -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DSELF_TEST=No -DBUILD_TOOLS=No .
+        make -j 4
         cd Server
         Install\PackWindowsExecutables.cmd
         mv Install\Cuberite.zip Install\cuberite-${{ matrix.target }}.zip
