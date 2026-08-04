@@ -154,8 +154,9 @@ function(set_exe_flags TARGET)
 
 			# TODO: actually fix the warnings instead of disabling them
 			# or at least disable on a file-level basis:
-			-Wno-missing-noreturn -Wno-padded -Wno-implicit-fallthrough
-			-Wno-double-promotion -Wno-switch-default -Wno-missing-include-dirs
+			-Wno-error=missing-noreturn -Wno-error=padded -Wno-error=implicit-fallthrough
+			-Wno-error=double-promotion -Wno-error=switch-default -Wno-error=missing-include-dirs
+			-Wno-error=implicit-int-conversion
 
 			# This is a pretty useless warning, we've already got -Wswitch which is what we need:
 			-Wno-switch-enum
@@ -199,7 +200,7 @@ function(set_exe_flags TARGET)
 				${TARGET} PRIVATE
 
 				# TODO: fix
-				-Wno-reserved-identifier
+				-Wno-error=reserved-identifier
 			)
 		endif()
 		if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 16)
@@ -207,7 +208,7 @@ function(set_exe_flags TARGET)
 				${TARGET} PRIVATE
 
 				# TODO: fix
-				-Wno-unsafe-buffer-usage
+				-Wno-error=unsafe-buffer-usage
 			)
 		endif()
 		if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 17)
@@ -215,7 +216,7 @@ function(set_exe_flags TARGET)
 				${TARGET} PRIVATE
 
 				# TODO: fix
-				-Wno-deprecated-literal-operator
+				-Wno-error=deprecated-literal-operator
 			)
 		endif()
 		if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 18)
@@ -223,7 +224,7 @@ function(set_exe_flags TARGET)
 				${TARGET} PRIVATE
 
 				# TODO: fix
-				-Wno-nan-infinity-disabled
+				-Wno-error=nan-infinity-disabled
 			)
 		endif()
 		if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 21)
@@ -231,7 +232,7 @@ function(set_exe_flags TARGET)
 				${TARGET} PRIVATE
 
 				# TODO: fix
-				-Wno-ms-bitfield-padding -Wno-unnecessary-virtual-specifier -Wno-nrvo
+				-Wno-error=ms-bitfield-padding -Wno-error=unnecessary-virtual-specifier -Wno-error=nrvo
 			)
 		endif()
 	endif()
