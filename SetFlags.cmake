@@ -208,5 +208,11 @@ function(set_exe_flags TARGET)
 				-Wno-unsafe-buffer-usage
 			)
 		endif()
+		if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 21)
+			target_compile_options(
+				${TARGET} PRIVATE
+				-Wms-bitfield-padding
+			)
+		endif()
 	endif()
 endfunction()
