@@ -231,7 +231,7 @@ function(set_exe_flags TARGET)
 				${TARGET} PRIVATE
 
 				# TODO: fix
-				-Wno-ms-bitfield-padding
+				-Wno-ms-bitfield-padding -Wno-unnecessary-virtual-specifier -Wno-nrvo
 			)
 		endif()
 	endif()
