@@ -100,8 +100,8 @@ jobs:
 
     - name: Build
       run: |
-        cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DSELF_TEST=Yes -DBUILD_TOOLS=Yes
-        cmake --build build
+        cmake -B build -DSELF_TEST=Yes -DBUILD_TOOLS=Yes
+        cmake --build build --config ${{ matrix.build_type }}
 
     - name: Prepare artifacts
       run: |
