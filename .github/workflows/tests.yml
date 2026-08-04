@@ -10,12 +10,12 @@ jobs:
       matrix:
         target: [linux-x86_64, linux-arm64, macos-x86_64, macos-arm64]
         build_type: [Release, Debug]
-        c_compiler: [gcc, clang]
+        c_compiler: [gcc]
         include:
           - target: linux-x86_64
-            os: ubuntu-24.04
+            os: ubuntu-26.04
           - target: linux-arm64
-            os: ubuntu-24.04-arm
+            os: ubuntu-26.04-arm
           - target: macos-x86_64
             os: macos-26-intel
           - target: macos-arm64
