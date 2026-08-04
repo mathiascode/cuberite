@@ -154,7 +154,7 @@ function(set_exe_flags TARGET)
 
 			# TODO: actually fix the warnings instead of disabling them
 			# or at least disable on a file-level basis:
-			-Wno-error=missing-noreturn -Wno-error=padded -Wno-error=implicit-fallthrough
+			-Wno-error=missing-noreturn -Wno-padded -Wno-error=implicit-fallthrough
 			-Wno-error=double-promotion -Wno-error=switch-default -Wno-error=missing-include-dirs
 			-Wno-error=implicit-int-conversion
 
@@ -208,7 +208,7 @@ function(set_exe_flags TARGET)
 				${TARGET} PRIVATE
 
 				# TODO: fix
-				-Wno-error=unsafe-buffer-usage
+				-Wno-unsafe-buffer-usage
 			)
 		endif()
 		if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 17)
