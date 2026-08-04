@@ -101,14 +101,13 @@ jobs:
     - name: Build
       run: |
         cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DSELF_TEST=Yes -DBUILD_TOOLS=Yes
-        cmake --build build --config ${{ matrix.build_type }}
+        cmake --build build
 
     - name: Prepare artifacts
       run: |
         cd build\Server
         Install\PackWindowsExecutables.cmd
         mv Cuberite.zip cuberite-${{ matrix.target }}.zip
-        mv PDBs.zip cuberite-pdbs.zip
         mv AutoAPI.zip cuberite-autoapi.zip
         mv ManualAPI.zip cuberite-manualapi.zip
 
@@ -117,13 +116,6 @@ jobs:
       uses: actions/upload-artifact@v7
       with:
         path: build\Server\cuberite-${{ matrix.target }}.zip
-        archive: false
-
-    - name: Upload artifact
-      if: matrix.target == 'windows-x86_64' && matrix.build_type == 'Release'
-      uses: actions/upload-artifact@v7
-      with:
-        path: build\Server\cuberite-pdbs.zip
         archive: false
 
     - name: Upload artifact
