@@ -208,6 +208,12 @@ function(set_exe_flags TARGET)
 				-Wno-unsafe-buffer-usage
 			)
 		endif()
+		if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 17)
+			target_compile_options(
+				${TARGET} PRIVATE
+				-Wno-deprecated-literal-operator
+			)
+		endif()
 		if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 21)
 			target_compile_options(
 				${TARGET} PRIVATE
