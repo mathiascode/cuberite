@@ -77,11 +77,15 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        target: [windows-x86_64]
+        target: [windows-x86_64, windows-arm64]
         build_type: [Release, Debug]
         include:
           - target: windows-x86_64
             os: windows-2022
+            arch: x64
+          - target: windows-arm64
+            os: windows-2022
+            arch: ARM64
     env:
       CUBERITE_BUILD_SERIES_NAME: CI
       CUBERITE_BUILD_ID: ${{ github.run_number }}
@@ -95,7 +99,7 @@ jobs:
 
     - name: Build
       run: |
-        cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DSELF_TEST=Yes -DBUILD_TOOLS=Yes
+        cmake -B build -A ${{ matrix.arch }} -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DSELF_TEST=Yes -DBUILD_TOOLS=Yes
         cmake --build build --config ${{ matrix.build_type }}
 
     - name: Prepare artifacts
