@@ -54,7 +54,8 @@ jobs:
       CUBERITE_BUILD_SERIES_NAME: GitHub CI
       CUBERITE_BUILD_ID: ${{ github.run_number }}
       CUBERITE_BUILD_COMMIT_ID: ${{ github.sha }}
-      CUBERITE_BUILD_DATETIME: ${{ github.event.repository.updated_at}}
+      CUBERITE_BUILD_DATETIME: ${{ github.event.repository.updated_at }}
+      MACOSX_DEPLOYMENT_TARGET: 11.0
 
     steps:
     - uses: actions/checkout@v7
@@ -229,7 +230,7 @@ jobs:
         path: android/Server/cuberite-android-x86_64.zip.sha1
         archive: false
 
-  upload_release:
+  release:
     if: github.repository == 'mathiascode/cuberite' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/experimental' || github.ref == 'refs/heads/ci-work')
     timeout-minutes: 15
     needs: [build, build-windows, build-android]
