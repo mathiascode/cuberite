@@ -41,9 +41,9 @@ jobs:
           - target: linux-arm64
             os: ubuntu-22.04-arm
           - target: macos-x86_64
-            os: macos-15-intel
+            os: macos-26-intel
           - target: macos-arm64
-            os: macos-15
+            os: macos-26
     env:
       MACOSX_DEPLOYMENT_TARGET: 11.0
 
@@ -137,7 +137,7 @@ jobs:
 
   build-android:
     timeout-minutes: 60
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-26.04
     env:
       CUBERITE_BUILD_SERIES_NAME: CI
       CUBERITE_BUILD_ID: ${{ github.run_number }}
