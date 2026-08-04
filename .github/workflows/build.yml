@@ -12,7 +12,7 @@ jobs:
       with:
         submodules: 'recursive'
 
-    - name: Build
+    - name: Prepare source tarball
       run: |
         tar -cvzf cuberite-source.tar.gz *
         sha1sum cuberite-source.tar.gz > cuberite-source.tar.gz.sha1
@@ -58,9 +58,10 @@ jobs:
         submodules: 'recursive'
 
     - name: Build
-      run: |
-        ./nightlybuild.sh -s GitHub -t ${{ matrix.target }} -b ${{ github.ref_name }} -c ${{ matrix.c_compiler }} -cxx ${{ matrix.cpp_compiler }} -m ${{ matrix.build_type }} -n ${{ github.run_number }}
+      run: ./nightlybuild.sh -s CI -t ${{ matrix.target }} -b ${{ github.ref_name }} -c ${{ matrix.c_compiler }} -cxx ${{ matrix.cpp_compiler }} -m ${{ matrix.build_type }} -n ${{ github.run_number }}
 
+    - name: Prepare artifacts
+      run: |
         mv Cuberite.tar.gz cuberite-${{ matrix.target }}.tar.gz
         mv Cuberite.tar.gz.sha1 cuberite-${{ matrix.target }}.tar.gz.sha1
 
@@ -101,6 +102,9 @@ jobs:
       run: |
         cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DSELF_TEST=Yes -DBUILD_TOOLS=Yes
         cmake --build build --config ${{ matrix.build_type }}
+
+    - name: Prepare artifacts
+      run: |
         cd build\Server
         Install\PackWindowsExecutables.cmd
         mv Cuberite.zip cuberite-${{ matrix.target }}.zip
@@ -157,9 +161,10 @@ jobs:
       run: sudo apt install lua5.1
 
     - name: Build
-      run: |
-        CMAKE=$ANDROID_SDK_ROOT/cmake/3.18.1/bin/cmake NDK=$ANDROID_NDK android/compile.sh all
+      run: CMAKE=$ANDROID_SDK_ROOT/cmake/3.18.1/bin/cmake NDK=$ANDROID_NDK android/compile.sh all
 
+    - name: Prepare artifacts
+      run: |
         mv android/Server/server.zip android/Server/cuberite-android-server.zip
         mv android/Server/server.zip.sha1 android/Server/cuberite-android-server.zip.sha1
         mv android/Server/armeabi-v7a.zip android/Server/cuberite-android-armeabi-v7a.zip
