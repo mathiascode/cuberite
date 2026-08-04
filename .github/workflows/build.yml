@@ -161,7 +161,10 @@ jobs:
       run: sudo apt install lua5.1
 
     - name: Build
-      run: CMAKE=$(echo "$ANDROID_SDK_ROOT"/cmake/*/bin/cmake) NDK="$ANDROID_NDK" android/compile.sh all
+      run: |
+        CMAKE=$(find "$ANDROID_SDK_ROOT/cmake" -name cmake -type f | sort -V | tail -n1)
+        NDK="$ANDROID_NDK"
+        android/compile.sh all
 
     - name: Prepare artifacts
       run: |
