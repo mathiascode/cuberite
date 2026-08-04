@@ -37,11 +37,3 @@ jobs:
 
     - name: Build and run tests
       run: ./cibuild.sh
-
-    - name: Upload artifact
-      if: matrix.target == 'linux-x86_64' && matrix.build_type == 'Release' && matrix.c_compiler == 'gcc'
-      uses: actions/upload-artifact@v7
-      with:
-        path: gcc_Release/Server/.luacheckrc
-        archive: false
-        include-hidden-files: true
