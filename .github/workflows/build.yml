@@ -104,6 +104,9 @@ jobs:
         cd build\Server
         Install\PackWindowsExecutables.cmd
         mv Cuberite.zip cuberite-${{ matrix.target }}.zip
+        mv PDBs.zip cuberite-pdbs.zip
+        mv AutoAPI.zip cuberite-autoapi.zip
+        mv ManualAPI.zip cuberite-manualapi.zip
 
     - name: Upload artifact
       if: matrix.build_type == 'Release'
@@ -111,6 +114,35 @@ jobs:
       with:
         path: build\Server\cuberite-${{ matrix.target }}.zip
         archive: false
+
+    - name: Upload artifact
+      if: matrix.target == 'windows-x86_64' && matrix.build_type == 'Release'
+      uses: actions/upload-artifact@v7
+      with:
+        path: build\Server\cuberite-pdbs.zip
+        archive: false
+
+    - name: Upload artifact
+      if: matrix.target == 'windows-x86_64' && matrix.build_type == 'Release'
+      uses: actions/upload-artifact@v7
+      with:
+        path: build\Server\cuberite-autoapi.zip
+        archive: false
+
+    - name: Upload artifact
+      if: matrix.target == 'windows-x86_64' && matrix.build_type == 'Release'
+      uses: actions/upload-artifact@v7
+      with:
+        path: build\Server\cuberite-manualapi.zip
+        archive: false
+
+    - name: Upload artifact
+      if: matrix.target == 'windows-x86_64' && matrix.build_type == 'Release'
+      uses: actions/upload-artifact@v7
+      with:
+        path: build\Server\.luacheckrc
+        archive: false
+        include-hidden-files: true
 
   build-android:
     timeout-minutes: 60
