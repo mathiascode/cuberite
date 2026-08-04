@@ -89,7 +89,7 @@ jobs:
         build_type: [Release, Debug]
         include:
           - target: windows-x86_64
-            os: windows-2025
+            os: windows-2022
           - target: windows-arm64
             os: windows-11-arm
 
@@ -100,7 +100,7 @@ jobs:
 
     - name: Build
       run: |
-        cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+        cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DSELF_TEST=Yes -DBUILD_TOOLS=Yes
         cmake --build build --config ${{ matrix.build_type }}
 
     - name: Prepare artifacts
