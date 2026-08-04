@@ -241,13 +241,17 @@ jobs:
       TAG_NAME: latest
 
     steps:
-      - name: Download Artifacts
-        uses: actions/download-artifact@v8
-        with:
-          merge-multiple: true
-          path: dist/
+    - uses: actions/checkout@v7
+      with:
+        submodules: 'recursive'
 
-      - name: Create release
-        run: |
-          gh release delete "$TAG_NAME" --cleanup-tag || true
-          gh release create "$TAG_NAME" --title "$TAG_NAME" dist/**/*
+    - name: Download Artifacts
+      uses: actions/download-artifact@v8
+      with:
+        merge-multiple: true
+        path: dist/
+
+    - name: Create release
+      run: |
+        gh release delete "$TAG_NAME" --cleanup-tag || true
+        gh release create "$TAG_NAME" --title "$TAG_NAME" dist/**/*
