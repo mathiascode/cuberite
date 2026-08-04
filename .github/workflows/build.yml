@@ -81,7 +81,7 @@ jobs:
         build_type: [Release, Debug]
         include:
           - target: windows-x86_64
-            os: windows-2022
+            os: windows-2025
     env:
       CUBERITE_BUILD_SERIES_NAME: CI
       CUBERITE_BUILD_ID: ${{ github.run_number }}
