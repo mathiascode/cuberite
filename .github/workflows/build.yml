@@ -227,7 +227,7 @@ jobs:
       contents: write
     env:
       GITHUB_TOKEN: ${{ github.token }}
-      TAG_NAME: latest-release
+      TAG_NAME: cuberite-latest
 
     steps:
     - uses: actions/checkout@v7
