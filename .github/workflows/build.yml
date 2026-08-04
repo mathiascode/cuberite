@@ -51,10 +51,6 @@ jobs:
           - c_compiler: clang
             cpp_compiler: clang++
     env:
-      CUBERITE_BUILD_SERIES_NAME: GitHub CI
-      CUBERITE_BUILD_ID: ${{ github.run_number }}
-      CUBERITE_BUILD_COMMIT_ID: ${{ github.sha }}
-      CUBERITE_BUILD_DATETIME: ${{ github.event.repository.updated_at }}
       MACOSX_DEPLOYMENT_TARGET: 11.0
 
     steps:
@@ -95,7 +91,7 @@ jobs:
           - target: windows-x86_64
             os: windows-2022
     env:
-      CUBERITE_BUILD_SERIES_NAME: GitHub CI
+      CUBERITE_BUILD_SERIES_NAME: CI
       CUBERITE_BUILD_ID: ${{ github.run_number }}
       CUBERITE_BUILD_COMMIT_ID: ${{ github.sha }}
       CUBERITE_BUILD_DATETIME: ${{ github.event.repository.updated_at}}
@@ -151,7 +147,7 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-22.04
     env:
-      CUBERITE_BUILD_SERIES_NAME: GitHub CI
+      CUBERITE_BUILD_SERIES_NAME: CI
       CUBERITE_BUILD_ID: ${{ github.run_number }}
       CUBERITE_BUILD_COMMIT_ID: ${{ github.sha }}
       CUBERITE_BUILD_DATETIME: ${{ github.event.repository.updated_at}}
