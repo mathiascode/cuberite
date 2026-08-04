@@ -20,7 +20,13 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v7
       with:
-        path: cuberite-source.tar.gz*
+        path: cuberite-source.tar.gz
+        archive: false
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v7
+      with:
+        path: cuberite-source.tar.gz.sha1
         archive: false
 
   build:
@@ -221,14 +227,14 @@ jobs:
       contents: write
     env:
       GITHUB_TOKEN: ${{ github.token }}
-      TAG_NAME: latest
+      TAG_NAME: latest-release
 
     steps:
     - uses: actions/checkout@v7
       with:
         submodules: 'recursive'
 
-    - name: Download Artifacts
+    - name: Download artifacts
       uses: actions/download-artifact@v8
       with:
         path: dist/
