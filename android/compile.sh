@@ -96,7 +96,8 @@ esac
 mkdir -p "$BUILDDIR"
 cd "$BUILDDIR"
 "$CMAKE" "$BASEDIR/../android" -DCMAKE_TOOLCHAIN_FILE="$NDK/build/cmake/android.toolchain.cmake" \
-    -DCMAKE_SYSTEM_NAME=Android
+    -DCMAKE_SYSTEM_NAME=Android \
+	-DTHREADS_PREFER_PTHREAD_FLAG=ON \
     -DANDROID_ABI="$1" \
     -DANDROID_NATIVE_API_LEVEL="$APILEVEL" \
     -DCMAKE_BUILD_TYPE="$TYPE" \
