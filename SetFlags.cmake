@@ -155,7 +155,7 @@ function(set_exe_flags TARGET)
 			# TODO: actually fix the warnings instead of disabling them
 			# or at least disable on a file-level basis:
 			-Wno-missing-noreturn -Wno-padded -Wno-implicit-fallthrough
-			-Wno-double-promotion -Wswitch-default
+			-Wno-double-promotion -Wno-switch-default
 
 			# This is a pretty useless warning, we've already got -Wswitch which is what we need:
 			-Wno-switch-enum
@@ -211,7 +211,7 @@ function(set_exe_flags TARGET)
 		if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 21)
 			target_compile_options(
 				${TARGET} PRIVATE
-				-Wms-bitfield-padding
+				-Wno-ms-bitfield-padding
 			)
 		endif()
 	endif()
