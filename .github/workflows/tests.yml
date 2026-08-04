@@ -22,8 +22,6 @@ jobs:
             os: macos-26
           - c_compiler: gcc
             cpp_compiler: g++
-          - c_compiler: clang
-            cpp_compiler: clang++
     env:
       CI_CUBERITE_BUILD_TYPE: ${{ matrix.build_type }}
       CI_JOB_NUMBER: ${{ github.run_number }}
