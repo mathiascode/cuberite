@@ -255,4 +255,4 @@ jobs:
     - name: Create release
       run: |
         gh release delete "$TAG_NAME" --cleanup-tag || true
-        gh release create "$TAG_NAME" --title "$TAG_NAME" dist/**/*
+        gh release create "$TAG_NAME" --title "$TAG_NAME" dist/*
