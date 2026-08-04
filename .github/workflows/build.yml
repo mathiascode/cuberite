@@ -248,8 +248,9 @@ jobs:
     - name: Download Artifacts
       uses: actions/download-artifact@v8
       with:
-        merge-multiple: true
         path: dist/
+        merge-multiple: true
+        skip-decompress: true
 
     - name: Create release
       run: |
