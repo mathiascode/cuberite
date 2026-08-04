@@ -205,18 +205,32 @@ function(set_exe_flags TARGET)
 		if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 16)
 			target_compile_options(
 				${TARGET} PRIVATE
+
+				# TODO: fix
 				-Wno-unsafe-buffer-usage
 			)
 		endif()
 		if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 17)
 			target_compile_options(
 				${TARGET} PRIVATE
+
+				# TODO: fix
 				-Wno-deprecated-literal-operator
+			)
+		endif()
+		if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 18)
+			target_compile_options(
+				${TARGET} PRIVATE
+
+				# TODO: fix
+				-Wno-nan-infinity-disabled
 			)
 		endif()
 		if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 21)
 			target_compile_options(
 				${TARGET} PRIVATE
+
+				# TODO: fix
 				-Wno-ms-bitfield-padding
 			)
 		endif()
