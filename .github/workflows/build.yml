@@ -162,8 +162,8 @@ jobs:
 
     - name: Build
       run: |
-        CMAKE=$(find "$ANDROID_SDK_ROOT/cmake" -name cmake -type f | sort -V | tail -n1)
-        NDK="$ANDROID_NDK"
+        export CMAKE=$(find "$ANDROID_SDK_ROOT/cmake" -name cmake -type f | sort -V | tail -n1)
+        export NDK="$ANDROID_NDK"
         android/compile.sh all
 
     - name: Prepare artifacts
