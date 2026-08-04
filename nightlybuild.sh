@@ -70,6 +70,11 @@ make -j 4
 # Package Server
 echo Cuberite "$CUBERITE_BUILD_SERIES_NAME-$CUBERITE_BUILD_ID\n$BUILD_URL" > Server/buildinfo.txt
 
+if [ "$(uname)" == "Darwin" ]
+then
+	codesign -s - Server/Cuberite
+fi
+
 # h: dereference (archive file/folder instead of symlink)
 # z: gzip (compress)
 # c: create
