@@ -4,7 +4,7 @@ permissions: {}
 
 jobs:
   source:
-    timeout-minutes: 60
+    timeout-minutes: 10
     runs-on: ubuntu-slim
 
     steps:
@@ -35,8 +35,6 @@ jobs:
     strategy:
       matrix:
         target: [linux-x86_64, linux-arm64, macos-x86_64, macos-arm64]
-        build_type: [Release, Debug]
-        c_compiler: [gcc, clang]
         include:
           - target: linux-x86_64
             os: ubuntu-22.04
@@ -46,10 +44,6 @@ jobs:
             os: macos-15-intel
           - target: macos-arm64
             os: macos-15
-          - c_compiler: gcc
-            cpp_compiler: g++
-          - c_compiler: clang
-            cpp_compiler: clang++
     env:
       MACOSX_DEPLOYMENT_TARGET: 11.0
 
@@ -59,7 +53,7 @@ jobs:
         submodules: 'recursive'
 
     - name: Build
-      run: ./nightlybuild.sh -s CI -t ${{ matrix.target }} -b ${{ github.ref_name }} -c ${{ matrix.c_compiler }} -cxx ${{ matrix.cpp_compiler }} -m ${{ matrix.build_type }} -n ${{ github.run_number }}
+      run: ./nightlybuild.sh -s "CI" -t ${{ matrix.target }} -b ${{ github.ref_name }} -c "clang" -cxx "clang++" -m "Release" -n ${{ github.run_number }}
 
     - name: Prepare artifacts
       run: |
@@ -67,14 +61,12 @@ jobs:
         mv Cuberite.tar.gz.sha1 cuberite-${{ matrix.target }}.tar.gz.sha1
 
     - name: Upload artifact
-      if: matrix.build_type == 'Release' && matrix.c_compiler == 'gcc'
       uses: actions/upload-artifact@v7
       with:
         path: cuberite-${{ matrix.target }}.tar.gz
         archive: false
 
     - name: Upload artifact
-      if: matrix.build_type == 'Release' && matrix.c_compiler == 'gcc'
       uses: actions/upload-artifact@v7
       with:
         path: cuberite-${{ matrix.target }}.tar.gz.sha1
@@ -228,7 +220,7 @@ jobs:
 
   release:
     if: github.repository == 'mathiascode/cuberite' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/experimental' || github.ref == 'refs/heads/ci-work')
-    timeout-minutes: 15
+    timeout-minutes: 10
     needs: [build, build-windows, build-android]
     runs-on: ubuntu-slim
     permissions:
