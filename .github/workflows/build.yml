@@ -55,6 +55,7 @@ jobs:
         submodules: 'recursive'
 
     - name: Install dependencies
+      if: matrix.target == 'linux-riscv64'
       run: |
         sudo apt update
         sudo apt install clang
