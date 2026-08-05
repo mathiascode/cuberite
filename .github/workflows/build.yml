@@ -54,6 +54,9 @@ jobs:
       with:
         submodules: 'recursive'
 
+    - name: Install dependencies
+      run: sudo apt install clang
+
     - name: Build
       run: ./nightlybuild.sh -s "CI" -t ${{ matrix.target }} -b ${{ github.ref_name }} -c "clang" -cxx "clang++" -m "Release" -n ${{ github.run_number }}
 
